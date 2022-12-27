@@ -11,7 +11,7 @@ pipeline {
       steps {
         echo "Checkout source from the SCM"
         echo "Current version is ${NEW_VERSION}"
-        sh "mvn clean install"
+        bat "mvn clean install"
       }
     }
     
