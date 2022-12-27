@@ -6,11 +6,17 @@ pipeline {
   tools {
     maven 'Maven'
   }
+  parameters {
+    string(name: 'VERSION', defaultValue: '', description: 'version to deploy on prod')
+    choice(name: 'PRODUCT_TYPE', choices: ['All', 'Product-1', 'Product-2'], description: 'Select required product type to be built')
+    booleanParam(name: 'SERVER_ONLY', defaultValue: false, description: 'Select "True", if you only need to build server component')
+  }
   stages {
     stage("checkout") {
       steps {
         echo "Checkout source from the SCM"
         echo "Current version is ${NEW_VERSION}"
+        echo "Product type is ${PRODUCT_TYPE} and entered version is ${VERSION}"
         bat "mvn clean install"
       }
     }
@@ -24,7 +30,7 @@ pipeline {
     stage("test") {
       when {
         expression { 
-          env.BRANCH_NAME == 'main'
+          env.BRANCH_NAME == 'main' && params.SERVER_ONLY
         }
       }
       steps {
