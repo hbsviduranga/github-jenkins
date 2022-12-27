@@ -1,9 +1,13 @@
 pipeline {
   agent any
+  environment {
+    NEW_VERSION = '1.2.5'
+  }
   stages {
     stage("checkout") {
       steps {
         echo "Checkout source from the SCM"
+        echo "Current version is ${NEW_VERSION}"
       }
     }
     
