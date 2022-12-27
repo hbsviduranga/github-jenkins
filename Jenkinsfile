@@ -24,7 +24,9 @@ pipeline {
     }
     stage("checkout") {
       steps {
-        gv.checkoutSource() 
+        script {
+          gv.checkoutSource()
+        }
         echo "Checkout source from the SCM"
         echo "Current version is ${NEW_VERSION}"
         echo "Product type is ${PRODUCT_TYPE} and entered version is ${VERSION}"
