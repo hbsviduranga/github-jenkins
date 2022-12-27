@@ -1,3 +1,5 @@
+def gv
+
 pipeline {
   agent any
   environment {
@@ -12,8 +14,17 @@ pipeline {
     booleanParam(name: 'SERVER_ONLY', defaultValue: false, description: 'Select "True", if you only need to build server component')
   }
   stages {
+    stage("Init") {
+      steps {
+        script {
+          gv = lead "script.groovy"
+          gv.initApp()
+        }
+      }
+    }
     stage("checkout") {
       steps {
+        gv.checkoutSource() 
         echo "Checkout source from the SCM"
         echo "Current version is ${NEW_VERSION}"
         echo "Product type is ${PRODUCT_TYPE} and entered version is ${VERSION}"
