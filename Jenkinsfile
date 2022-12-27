@@ -3,11 +3,15 @@ pipeline {
   environment {
     NEW_VERSION = '1.2.5'
   }
+  tools {
+    maven 'Maven'
+  }
   stages {
     stage("checkout") {
       steps {
         echo "Checkout source from the SCM"
         echo "Current version is ${NEW_VERSION}"
+        sh "mvn clean install"
       }
     }
     
